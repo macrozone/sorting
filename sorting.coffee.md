@@ -9,9 +9,9 @@
 
 different h series for the shell-sorts
 
-		h1 = (i, h) -> Math.pow 2, i
-		h2 = (i, h) -> Math.pow(2, i)-1
-		h3 = (i, h) -> 3*h + 1
+		h_shell = (i, h) -> Math.pow 2, i
+		h_hibbard = (i, h) -> Math.pow(2, i)-1
+		h_knuth = (i, h) -> 3*h + 1
 	
 	
 
@@ -22,10 +22,10 @@ different h series for the shell-sorts
 		plots = [
 			{label: "quicksort", func:(n) => mesureTime n, @quicksort}
 			{label: "shellsort", func:(n) => mesureTime n, @shellsort}
-			{label: "shellsort h1", func:(n) => mesureTime n, (list) -> @shellsort_h list, h1}
+			{label: "shellsort h_shell", func:(n) => mesureTime n, (list) -> @shellsort_h list, h_shell}
 			
-			{label: "shellsort h2", func:(n) => mesureTime n, (list) -> @shellsort_h list, h2}
-			{label: "shellsort h3", func:(n) => mesureTime n, (list) -> @shellsort_h list, h3}
+			{label: "shellsort h_hibbard", func:(n) => mesureTime n, (list) -> @shellsort_h list, h_hibbard}
+			{label: "shellsort h_knuth", func:(n) => mesureTime n, (list) -> @shellsort_h list, h_knuth}
 		
 to compare, we have a n * log(n) graph, factor is more or less ranom, it may differ on different systems
 
