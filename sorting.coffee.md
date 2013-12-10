@@ -20,16 +20,16 @@ different h series for the shell-sorts
 
 
 		plots = [
-			{label: "quicksort", func:(n) => mesureTime n, @quicksort}
-			{label: "shellsort", func:(n) => mesureTime n, @shellsort}
-			{label: "shellsort h_shell", func:(n) => mesureTime n, (list) -> @shellsort_h list, h_shell}
+			{label: "quicksort", visibleAtStartup: true, func:(n) => mesureTime n, @quicksort}
+			{label: "shellsort", visibleAtStartup: true, func:(n) => mesureTime n, @shellsort}
+			{label: "shellsort h_shell (slow!)", visibleAtStartup: false, func:(n) => mesureTime n, (list) -> @shellsort_h list, h_shell}
 			
-			{label: "shellsort h_hibbard", func:(n) => mesureTime n, (list) -> @shellsort_h list, h_hibbard}
-			{label: "shellsort h_knuth", func:(n) => mesureTime n, (list) -> @shellsort_h list, h_knuth}
+			{label: "shellsort h_hibbard (slow!)", visibleAtStartup: false, func:(n) => mesureTime n, (list) -> @shellsort_h list, h_hibbard}
+			{label: "shellsort h_knuth (slow!)", visibleAtStartup: false, func:(n) => mesureTime n, (list) -> @shellsort_h list, h_knuth}
 		
 to compare, we have a n * log(n) graph, factor is more or less ranom, it may differ on different systems
 
-			{label: "c * n * log(n)", func: (n) => 0.00001*n*Math.log n}
+			{label: "c * n * log(n)", visibleAtStartup: true, func: (n) => 0.00001*n*Math.log n}
 			]
 		
 		
@@ -40,20 +40,11 @@ to compare, we have a n * log(n) graph, factor is more or less ranom, it may dif
 			endTime = new Date().getTime()
 			endTime - startTime
 		
-		reset = ->
-			Session.set "n", 1000
-			running = false
-			chart = $chart.highcharts()
-			while chart.series.length > 0 
-				chart.series[0].remove true
 		
 		runTest = (n) ->
 
 			chart = $chart.highcharts()
 			for plot, index in plots
-				
-				chart.addSeries {name: plot.label, data:[]} unless chart.series[index]?
-
 				if chart.series[index].visible
 					t = plot.func n
 					chart.series[index].addPoint [n, t]
@@ -81,16 +72,31 @@ to compare, we have a n * log(n) graph, factor is more or less ranom, it may dif
 
 
 
+		reset = ->
+
+			Session.set "n", 1000
+			running = false
+			chart = $chart.highcharts()
+
+remove all series
+
+			while chart.series.length > 0 
+				chart.series[0].remove true
+
+readd series
+
+			for plot, index in plots
+				chart.addSeries name: plot.label, data:[], visible: plot.visibleAtStartup
+
 		Template.tests.n = -> Math.round Session.get "n"
 
 		Template.tests.events =
 			"click .reset": reset
 			"click .start": start
 
-		Template.chart.rendered = ->
-		
 ## highcharts config
 
+		initChart = ->
 			$chart = $(this.find(".chart")).highcharts
 				chart:
 					height: 600
@@ -112,6 +118,18 @@ to compare, we have a n * log(n) graph, factor is more or less ranom, it may dif
 					type: "logarithmic"
 					title:
 						text: "time taken in ms"
+
+		Template.chart.rendered = ->
+
+			initChart.apply this
+			reset()
+		
+
+
+
+
+
+
 				
 			
 		
