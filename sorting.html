@@ -3,22 +3,32 @@
 </head>
 
 <body>
+<div class="container">
 <h1>Sorting runtime comparison</h1>
 <a href="https://github.com/macrozone/sorting"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
 {{>tests}}
+</div>
 </body>
 
 
 <template name="tests">
 
-<button class="start">start / stop</button>
-<button class="reset">reset</button>
-
+<div>
+<br />
+<br />
+<button class="start btn btn-primary">start / stop</button>
+<button class="reset btn btn-warning">reset</button>
+<br />
+<br />
+</div>
 
 {{#isolate}} 
-<p>n: {{n}}</p>
+<p class="label">n: {{n}}</p>
+<br />
 {{/isolate}} 
   {{> chart}}
+
+
   </template>
 
 <template name="chart">
