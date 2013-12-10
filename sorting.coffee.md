@@ -54,9 +54,10 @@ to compare, we have a n * log(n) graph, factor is more or less ranom, it may dif
 				
 				chart.addSeries {name: plot.label, data:[]} unless chart.series[index]?
 
-				t = plot.func n if chart.series[index].visible
+				if chart.series[index].visible
+					t = plot.func n
+					chart.series[index].addPoint [n, t]
 				
-				chart.series[index].addPoint [n, t]
 			
 		
 		start = ->
