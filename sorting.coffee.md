@@ -9,11 +9,23 @@
 
 different h series for the shell-sorts
 
+
+
 		h_shell = (i, h) -> Math.pow 2, i
 		h_hibbard = (i, h) -> Math.pow(2, i)-1
 		h_knuth = (i, h) -> 3*h + 1
 	
 	
+		make_h_serie = (n, h_func) ->
+			h_serie = [1]
+			i = 0
+			h = 1
+			while h < n
+				h_serie.push h unless h <=1
+				h = h_func(i,h)
+				i++
+			return h_serie.reverse()
+
 
 ## The plots
 
@@ -22,11 +34,16 @@ different h series for the shell-sorts
 		plots = [
 			{label: "quicksort", visibleAtStartup: true, func:(n) => mesureTime n, @quicksort}
 			{label: "shellsort", visibleAtStartup: true, func:(n) => mesureTime n, @shellsort}
-			{label: "shellsort h_shell (slow!)", visibleAtStartup: false, func:(n) => mesureTime n, (list) -> @shellsort_h list, h_shell}
+			{label: "shellsort h_shell (slow!)", visibleAtStartup: false, func:(n) => 
+				h_serie = make_h_serie n, h_shell
+				mesureTime n, (list) -> @shellsort_h list, h_serie}
+			{label: "shellsort h_hibbard (slow!)", visibleAtStartup: false, func:(n) => 
+				h_serie = make_h_serie n, h_hibbard
+				mesureTime n, (list) -> @shellsort_h list, h_serie}
+			{label: "shellsort h_knuth (slow!)", visibleAtStartup: false, func:(n) => 
+				h_serie = make_h_serie n, h_knuth
+				mesureTime n, (list) -> @shellsort_h list, h_serie}
 			
-			{label: "shellsort h_hibbard (slow!)", visibleAtStartup: false, func:(n) => mesureTime n, (list) -> @shellsort_h list, h_hibbard}
-			{label: "shellsort h_knuth (slow!)", visibleAtStartup: false, func:(n) => mesureTime n, (list) -> @shellsort_h list, h_knuth}
-		
 to compare, we have a n * log(n) graph, factor is more or less ranom, it may differ on different systems
 
 			{label: "c * n * log(n)", visibleAtStartup: true, func: (n) => 0.00001*n*Math.log n}
