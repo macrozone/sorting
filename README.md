@@ -7,7 +7,12 @@ see it in action here:
 
 http://sorting.macrozone.ch/
 
-just click on start to run it.
+just click on start to run it. 
+
+Notice: may be slow down at high n! 
+
+tested with Chrome 32
+
 
 ## Sorting implementations
 
