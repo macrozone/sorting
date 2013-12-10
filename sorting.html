@@ -1,0 +1,26 @@
+<head>
+  <title>sorting</title>
+</head>
+
+<body>
+{{>tests}}
+</body>
+
+
+<template name="tests">
+
+<button class="start">start / stop</button>
+<button class="reset">reset</button>
+
+
+{{#isolate}} 
+<p>n: {{n}}</p>
+{{/isolate}} 
+  {{> chart}}
+  </template>
+
+<template name="chart">
+
+	<div class="chart" width="100%" height="900px"></div>
+
+</template>
