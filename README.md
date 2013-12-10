@@ -1,4 +1,4 @@
 sorting
 =======
 
-see [sorting.coffee.md|(sorting.coffee.md)
+see [sorting.coffee.md](sorting.coffee.md)
